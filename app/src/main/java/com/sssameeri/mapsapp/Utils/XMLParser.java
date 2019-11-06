@@ -59,8 +59,7 @@ public class XMLParser {
                                 }
 
                             }
-
-                            region.addChildren(child);
+                            
                         }
 
                         break;
