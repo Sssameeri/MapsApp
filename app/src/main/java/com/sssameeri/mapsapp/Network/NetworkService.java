@@ -92,7 +92,7 @@ public class NetworkService {
                     outputStream.write(fileReader, 0, read);
 
                     fileSizeDownloaded += read;
-                    
+
                     Log.d(Prefs.TAG, "file download: " + fileSizeDownloaded + " of " + fileSize);
                 }
 
