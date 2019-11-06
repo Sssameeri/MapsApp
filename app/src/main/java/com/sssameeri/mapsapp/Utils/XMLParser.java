@@ -67,17 +67,12 @@ public class XMLParser {
                     }
                     case XmlPullParser.END_TAG: {
 
-                        if (parser.getDepth() == region.getDepth()) {
-                            child = region;
-                            region = region.getParent();
-                        }
-
                         break;
 
                     }
 
                     case XmlPullParser.TEXT: {
-                        Log.d(Prefs.TAG, "text = " + parser.getText());
+                        Log.d(Prefs.TAG, "Text: " + parser.getText());
                         break;
                     }
 

@@ -13,9 +13,6 @@ public class Region {
    private boolean isMapAvailable = false;
    private int depth;
    private Region parent;
-    private ArrayList<Region> children = new ArrayList<>();
-
-
 
     public Region getParent() {
         return parent;
@@ -35,7 +32,6 @@ public class Region {
     public Region() {
     }
 
-
     public boolean isMapAvailable() {
         return isMapAvailable;
     }
@@ -51,8 +47,6 @@ public class Region {
     public void setDepth(int depth) {
         this.depth = depth;
     }
-
-
 
     public String getContinent() {
         return continent;
@@ -72,9 +66,6 @@ public class Region {
 
     public void setName(String name) {
         this.name = name;
-    }
-    public void addChildren(Region region) {
-        children.add(region);
     }
 
 }
