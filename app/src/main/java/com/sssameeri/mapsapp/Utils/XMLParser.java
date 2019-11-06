@@ -1,6 +1,7 @@
 package com.sssameeri.mapsapp.Utils;
 
 import android.content.Context;
+import android.text.LoginFilter;
 import android.util.Log;
 
 import com.sssameeri.mapsapp.Models.Region;
@@ -10,77 +11,69 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class XMLParser {
 
-    private Region region, child;
+    private List<Region> regions;
     private Context context;
+    private Region region;
+    private Region child;
 
     public XMLParser(Context context) {
         this.context = context;
+        regions = new ArrayList<>();
     }
 
-    public void parseXM() throws IOException, XmlPullParserException{
-        region = new Region();
+    public List<Region> parseXML() throws IOException, XmlPullParserException {
 
+
+        XmlPullParser parser = context.getResources().getXml(R.xml.regions);
+        int eventType = parser.getEventType();
         int depth = 1;
-
+        region = new Region();
         region.setDepth(depth);
 
-            XmlPullParser parser = context.getResources().getXml(R.xml.regions);
-            int eventType = parser.getEventType();
+        while (eventType != XmlPullParser.END_DOCUMENT) {
+            String tagName = parser.getName();
+            switch (eventType) {
+                case XmlPullParser.START_DOCUMENT:
+                    Log.d(Prefs.TAG, "START_DOCUMENT");
+                break;
 
-            while (parser.next() != XmlPullParser.END_DOCUMENT) {
-                switch (eventType) {
-                    case XmlPullParser.START_DOCUMENT: {
-                        Log.d(Prefs.TAG, "START_DOCUMENT");
-                        break;
-                    }
-                    case XmlPullParser.START_TAG : {
+                case XmlPullParser.START_TAG :
 
-                        if(parser.getDepth() > region.getDepth() + 1) {
-                            region = child;
-                        }
-                        if (parser.getDepth() == region.getDepth() + 1) {
-                            child = new Region();
-                            child.setParent(region);
-                            child.setDepth(parser.getDepth());
-
-                            for (int i = 0; i < parser.getAttributeCount(); i++) {
-                                if (parser.getAttributeName(i).equals("name")) {
-                                    child.setName(parser.getAttributeValue(i));
-                                    Log.d(Prefs.TAG, parser.getDepth() + " " + parser.getAttributeValue(i));
+                    if(parser.getDepth() == region.getDepth() + 2) {
+                        Region mainRegion = new Region();
+                        if (parser.getName().equalsIgnoreCase("region")) {
+                            for(int i = 0; i < parser.getAttributeCount(); i++) {
+                                if(parser.getAttributeName(i).equalsIgnoreCase("name")) {
+                                    mainRegion.setName(capitalize(parser.getAttributeValue(i)));
+                                    mainRegion.setDownloadUrl(capitalize(parser.getAttributeValue(i)));
                                 }
-                                else if (parser.getAttributeName(i).equals("map")) {
-                                    Log.d(Prefs.TAG, parser.getDepth() + " " + parser.getAttributeValue(i));
-                                }
-                                else if (parser.getAttributeName(i).equals("type")) {
-                                    child.setMapAvailable(false);
-                                }
-
                             }
-                            
                         }
-
-                        break;
-                    }
-                    case XmlPullParser.END_TAG: {
-
-                        break;
-
+                        regions.add(mainRegion);
                     }
 
-                    case XmlPullParser.TEXT: {
-                        Log.d(Prefs.TAG, "Text: " + parser.getText());
-                        break;
-                    }
+                    break;
 
-                    default:
-                        break;
-                }
-                eventType = parser.next();
+                case XmlPullParser.END_TAG :
+
+
+
+
+                    break;
             }
+            eventType = parser.next();
+        }
+        return regions;
     }
 
+    private String capitalize(final String line) {
+        if (line.length() == 0) { return line; }
+        return Character.toUpperCase(line.charAt(0)) + line.substring(1);
+    }
 
 }

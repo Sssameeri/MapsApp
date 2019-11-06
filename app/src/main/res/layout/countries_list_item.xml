@@ -5,19 +5,20 @@
     android:layout_height="52dp"
     >
 
+
     <RelativeLayout
-        android:padding="8dp"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
 
         <ImageView
             android:id="@+id/mapImageView"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             app:srcCompat="@drawable/ic_map"
-            android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             />
 
         <TextView
@@ -28,20 +29,42 @@
             android:textSize="16sp"
             android:textColor="@color/textColor"
             android:layout_toEndOf="@id/mapImageView"
-            android:layout_centerVertical="true"
-            android:layout_margin="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
             />
 
         <ImageView
             android:id="@+id/downloadImageView"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             app:srcCompat="@drawable/ic_action_import"
-            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            />
+
+        <ProgressBar
+            android:id="@+id/downloadProgressBar"
+            android:layout_width="280dp"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_height="4dp"
+            android:layout_below="@id/countryTextView"
+            android:layout_centerHorizontal="true"
+            />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/separatorColor"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/mapImageView"
+            android:layout_marginStart="5dp"
             />
 
     </RelativeLayout>
+
 
 </androidx.cardview.widget.CardView>

@@ -1,44 +1,35 @@
 package com.sssameeri.mapsapp.Models;
 
+import android.os.AsyncTask;
+import android.os.Environment;
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.core.util.Pair;
+
+import com.sssameeri.mapsapp.Network.NetworkService;
+import com.sssameeri.mapsapp.Utils.Prefs;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Region {
 
-   private String name;
-   private String continent;
-   private boolean isMapAvailable = false;
-   private int depth;
-   private Region parent;
-
-    public Region getParent() {
-        return parent;
-    }
-
-    public void setParent(Region parent) {
-        this.parent = parent;
-    }
-
-    public Region(String name, String continent, boolean isMapAvailable, int depth) {
-        this.name = name;
-        this.continent = continent;
-        this.isMapAvailable = isMapAvailable;
-        this.depth = depth;
-    }
-
-    public Region() {
-    }
-
-    public boolean isMapAvailable() {
-        return isMapAvailable;
-    }
-
-    public void setMapAvailable(boolean mapAvailable) {
-        isMapAvailable = mapAvailable;
-    }
+    public String name;
+    public String downloadUrl;
+    public int depth;
 
     public int getDepth() {
         return depth;
@@ -48,24 +39,20 @@ public class Region {
         this.depth = depth;
     }
 
-    public String getContinent() {
-        return continent;
-    }
-
-    public void setContinent(String continent) {
-        this.continent = continent;
-    }
-
-    public Region(String name) {
-        this.name = name;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl + Prefs.urlEnd;
     }
 
 }

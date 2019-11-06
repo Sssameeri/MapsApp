@@ -55,6 +55,7 @@
 
         </RelativeLayout>
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:background="@android:color/white"
             android:id="@+id/recyclerView"
@@ -64,10 +65,7 @@
             android:layout_marginTop="30dp"
             />
 
-        <TextView
-            android:text="@string/sample_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
