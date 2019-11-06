@@ -32,7 +32,7 @@ public class NetworkService {
     }
 
     public void downloadFile(final Region region) {
-
+//
         final String url = "http://download.osmand.net/download.php?standard=yes&file=" ;
 
         Retrofit.Builder builder = new Retrofit.Builder()
