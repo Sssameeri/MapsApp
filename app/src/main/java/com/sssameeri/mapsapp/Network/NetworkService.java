@@ -3,6 +3,8 @@ package com.sssameeri.mapsapp.Network;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.sssameeri.mapsapp.Models.Region;
@@ -26,6 +28,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkService {
 
     private Context context;
+    private ProgressBar bar;
+
+    public void setBar(ProgressBar bar) {
+        this.bar = bar;
+    }
 
     public NetworkService(Context context) {
         this.context = context;
@@ -49,11 +56,23 @@ public class NetworkService {
             public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
                 Toast.makeText(context, "File downloading started", Toast.LENGTH_SHORT).show();
 
-                new AsyncTask<Void, Void, Void>() {
+                new AsyncTask<Void, Integer, Void>() {
+
                     @Override
                     protected Void doInBackground(Void... voids) {
                         boolean success = writeResponseBodyToDisk(response.body(), region);
                         return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+                        bar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    protected void onProgressUpdate(Integer... values) {
+                       bar.setProgress(values[0]);
+                        super.onProgressUpdate(values);
                     }
                 }.execute();
             }
@@ -68,7 +87,7 @@ public class NetworkService {
 
     private boolean writeResponseBodyToDisk(ResponseBody body, Region region) {
         try {
-            File futureStudioIconFile = new File(context.getFilesDir(),  region.getName() + Prefs.urlEnd);
+            File file = new File(context.getFilesDir(),  region.getName() + Prefs.urlEnd);
 
             InputStream inputStream = null;
             OutputStream outputStream = null;
@@ -80,7 +99,7 @@ public class NetworkService {
                 long fileSizeDownloaded = 0;
 
                 inputStream = body.byteStream();
-                outputStream = new FileOutputStream(futureStudioIconFile);
+                outputStream = new FileOutputStream(file);
 
                 while (true) {
                     int read = inputStream.read(fileReader);

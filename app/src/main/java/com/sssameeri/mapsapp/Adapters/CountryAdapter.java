@@ -60,6 +60,8 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
             downloadImageView = itemView.findViewById(R.id.downloadImageView);
             downloadProgressBar = itemView.findViewById(R.id.downloadProgressBar);
             downloadProgressBar.setVisibility(View.INVISIBLE);
+
+
         }
 
         @Override
@@ -68,6 +70,9 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
             int position = getAdapterPosition();
             Region region = regionList.get(position);
             NetworkService networkService = new NetworkService(context);
+            downloadProgressBar.setVisibility(View.VISIBLE);
+            downloadProgressBar.setProgress(0);
+            networkService.setBar(downloadProgressBar);
             networkService.downloadFile(region);
 
         }
