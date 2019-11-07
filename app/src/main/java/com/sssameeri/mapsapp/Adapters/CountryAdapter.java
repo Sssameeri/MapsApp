@@ -59,8 +59,6 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
             name = itemView.findViewById(R.id.countryTextView);
             downloadImageView = itemView.findViewById(R.id.downloadImageView);
             downloadProgressBar = itemView.findViewById(R.id.downloadProgressBar);
-            downloadProgressBar.setVisibility(View.INVISIBLE);
-            downloadProgressBar.setEnabled(false);
         }
 
         @Override
